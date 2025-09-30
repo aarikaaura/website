@@ -23,7 +23,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   // 🎯 Shuffle & get 3 random related products
   const relatedProducts = shuffleArray(
-    products.filter((p) => p.id !== productId)
+    products.filter((p) => String(p.id) !== String(productId))
   ).slice(0, 3);
 
   return (

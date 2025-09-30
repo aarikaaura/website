@@ -10,7 +10,7 @@ export type Product = {
 
 const products: Product[] = [
   {
-    id: 1,
+    id: "1",
     name: "Elegant Straight Suit",
     price: 79.99,
     image: "/products/product_1.png",
@@ -18,7 +18,7 @@ const products: Product[] = [
     description: "Classic straight-cut suit with delicate embroidery — perfect for formal occasions.",
   },
   {
-    id: 2,
+    id: "2",
     name: "Embroidered Palazzo Suit",
     price: 99.99,
     image: "/products/plazoimage.jpg",
@@ -26,7 +26,7 @@ const products: Product[] = [
     description: "Flowy palazzo bottom with matching embroidered top — comfy & stylish.",
   },
   {
-    id: 3,
+    id: "3",
     name: "Silk Palazzo Set",
     price: 69.99,
     image: "/products/product_2.jpeg",
@@ -34,7 +34,7 @@ const products: Product[] = [
     description: "Lightweight silk palazzo set in seasonal colours.",
   },
   {
-    id: 4,
+    id: "4",
     name: "Festive Sharara",
     price: 119.99,
     image: "/products/product_3.jpeg",
@@ -42,7 +42,7 @@ const products: Product[] = [
     description: "Traditional sharara with rich details — great for functions and weddings.",
   },
   {
-    id: 5,
+    id: "5",
     name: "Bridal Lehenga (Light)",
     price: 249.99,
     image: "/products/product_4.png",
