@@ -15,7 +15,7 @@ function shuffleArray<T>(array: T[]): T[] {
 
 export default function ProductPage({ params }: ProductPageProps) {
   const productId = parseInt(params.id, 10);
-  const product = products.find((p) => p.id === productId);
+  const product = products.find((p) => String(p.id) === String(productId));
 
   if (!product) {
     return notFound();
