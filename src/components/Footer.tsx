@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import {Instagram} from "lucide-react";
+import { SiTiktok } from "react-icons/si";
 
 export default function Footer() {
   return (
@@ -45,17 +46,13 @@ export default function Footer() {
         <div>
           <h3 className="text-xl font-bold mb-4 text-white">Follow Us</h3>
           <div className="flex space-x-4">
-            <Link href="#" className="hover:text-indigo-500">
-              <Facebook className="w-6 h-6" />
-            </Link>
-            <Link href="#" className="hover:text-indigo-500">
+            
+            <Link href="https://www.instagram.com/aarikaaura/" target="_blank" className="hover:text-indigo-500">
               <Instagram className="w-6 h-6" />
             </Link>
-            <Link href="#" className="hover:text-indigo-500">
-              <Twitter className="w-6 h-6" />
-            </Link>
-            <Link href="#" className="hover:text-indigo-500">
-              <Linkedin className="w-6 h-6" />
+            
+            <Link href="https://www.tiktok.com/@aarikaaura" target="_blank" className="hover:text-indigo-500">
+              <SiTiktok className="w-6 h-6" />
             </Link>
           </div>
         </div>
@@ -64,7 +61,7 @@ export default function Footer() {
 
       {/* Bottom Copyright */}
       <div className="border-t border-gray-700 text-center py-4 text-gray-500 text-sm">
-        © {new Date().getFullYear()} MyShop. All rights reserved.
+        © {new Date().getFullYear()} Aarika Aura. All rights reserved.
       </div>
     </footer>
   );
