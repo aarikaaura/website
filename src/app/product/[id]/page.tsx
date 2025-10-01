@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import products from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
+import { Star } from "lucide-react";
 
 interface ProductPageProps {
   params: { id: string };
@@ -11,6 +12,21 @@ interface ProductPageProps {
 // 🔀 Simple shuffle function
 function shuffleArray<T>(array: T[]): T[] {
   return [...array].sort(() => Math.random() - 0.5);
+}
+// ⭐️ Render star rating
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex items-center gap-1 text-yellow-500">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={`w-5 h-5 ${
+            i < rating ? "fill-yellow-400 stroke-yellow-400" : "stroke-gray-300"
+          }`}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -53,6 +69,10 @@ export default function ProductPage({ params }: ProductPageProps) {
         <div className="flex flex-col">
           <div>
             <h1 className="text-3xl font-bold mb-3">{product.name}</h1>
+<div className="flex items-center gap-3 mb-4">
+              <StarRating rating={4} />
+              <span className="text-sm text-gray-500">(120 reviews)</span>
+            </div>
             <p className="text-gray-600 mb-6">{product.description}</p>
 
             {/* ⭐️ Extra Details */}
