@@ -11,14 +11,18 @@ const featured = products.slice(0, 6);
 <div className="flex flex-col min-h-screen">
     <main className="flex-grow">
 
-<Header />
+
+  <Header />
+
 
       {/* 🔥 Hero Image Slider */}
-      <HeroSlider />
+      <div className="max-w-8xl mx-auto p-5">
+  <HeroSlider />
+</div>
 
 
       {/* 🛍 Featured Products Section */}
-      <section id="products" className="max-w-7xl mx-auto p-6">
+      <section id="products" className="max-w-8xl mx-auto p-5">
         <h2 className="text-2xl font-semibold mb-4">Featured Collection</h2>
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
@@ -29,7 +33,7 @@ const featured = products.slice(0, 6);
         <div className="text-center mt-8">
           <Link
             href="/products"
-            className="px-6 py-2 bg-gray-700 text-white rounded-lg shadow-md
+            className="px-6 py-3 bg-gray-700 text-white rounded-lg shadow-md
                        transition duration-300 hover:bg-gray-900 active:scale-95"
           >
             View All Products

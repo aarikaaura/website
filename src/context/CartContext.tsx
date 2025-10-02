@@ -3,18 +3,27 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import type { Product } from "@/lib/products";
 
+// Update the CartItem interface to include size
+interface CartItem extends Product {
+  quantity: number;
+  selectedSize?: string;
+}
+
 interface CartContextType {
-  cartItems: Product[];
-  addToCart: (product: Product) => void;
-  removeFromCart: (id: number) => void;
-  updateCartItemQuantity: (id: number, quantity: number) => void;
+  cartItems: CartItem[];
+  addToCart: (product: Product, size?: string, onAdded?: () => void) => void;
+  removeFromCart: (id: number, size?: string) => void; // Add size parameter
+  updateCartItemQuantity: (id: number, quantity: number, size?: string) => void; // Add size parameter
   clearCart: () => void;
+  subtotal: number;
+  tax: number;
+  total: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -33,37 +42,73 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [cartItems]);
 
-  const addToCart = (product: ProductProduct, onAdded?: () => void) => {
+  // Updated addToCart to accept size parameter
+  const addToCart = (product: Product, size?: string, onAdded?: () => void) => {
     setCartItems((prev) => {
-      const exist = prev.find((p) => p.id === product.id);
+      // Check if product with same ID AND same size already exists
+      const exist = prev.find((p) => 
+        p.id === product.id && p.selectedSize === size
+      );
+      
       if (exist) {
-if (onAdded) onAdded();
+        if (onAdded) onAdded();
         return prev.map((p) =>
-          p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+          p.id === product.id && p.selectedSize === size 
+            ? { ...p, quantity: p.quantity + 1 } 
+            : p
         );
- 
-    if (onAdded) onAdded();
       }
-      return [...prev, { ...product, quantity: 1 }];
+      
+      if (onAdded) onAdded();
+      // Add new item with selected size
+      return [...prev, { 
+        ...product, 
+        quantity: 1,
+        selectedSize: size 
+      }];
     });
   };
 
-  const removeFromCart = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = (id: number, size?: string) => {
+    setCartItems((prev) => 
+      prev.filter((item) => !(item.id === id && item.selectedSize === size))
+    );
   };
 
-  const updateCartItemQuantity = (id: number, quantity: number) => {
+  const updateCartItemQuantity = (id: number, quantity: number, size?: string) => {
     if (quantity < 1) return;
     setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+      prev.map((item) =>
+        item.id === id && item.selectedSize === size
+          ? { ...item, quantity: Math.max(1, quantity) }
+          : item
+      )
     );
   };
 
   const clearCart = () => setCartItems([]);
 
+  // Totals calculation
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const taxRate = 0.13;
+  const tax = subtotal * taxRate;
+  const total = subtotal + tax;
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, updateCartItemQuantity, clearCart }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        updateCartItemQuantity,
+        clearCart,
+        subtotal,
+        tax,
+        total,
+      }}
     >
       {children}
     </CartContext.Provider>
